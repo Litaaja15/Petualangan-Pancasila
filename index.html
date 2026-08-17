@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Garuda Pancasila 6C - SDN 1 Tanjung Senang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        pancasila: {
+                            gold: '#F59E0B',
+                            red: '#EF4444',
+                            green: '#10B981',
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                            cream: '#FEF3C7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #dcfce7 100%);
+            min-height: 100vh;
+        }
+        .heading-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .bounce-hover:hover {
+            transform: translateY(-4px) scale(1.02);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <header class="bg-white/80 backdrop-blur-md border-b border-amber-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 bg-amber-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-md">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="heading-font text-xl md:text-2xl font-bold text-amber-900 leading-tight">Game Pancasila 6C</h1>
+                    <p class="text-xs text-amber-700 font-semibold">SDN 1 Tanjung Senang • Bandar Lampung</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button id="btn-sound-toggle" onclick="toggleSound()" class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-xl text-sm font-bold flex items-center gap-2 transition">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-amber-600"></i>
+                    <span class="hidden sm:inline">Suara</span>
+                </button>
+                <button onclick="openTeacherModal()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-sm transition bounce-hover">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Mode Guru</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
+
+        <!-- SCREEN 1: REGISTRATION / WELCOME -->
+        <section id="screen-welcome" class="glass-card rounded-3xl p-6 md:p-10 shadow-xl border-4 border-amber-300 text-center relative overflow-hidden my-auto">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-200/50 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-emerald-200/50 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-800 rounded-full text-xs md:text-sm font-bold mb-4 border border-amber-300">
+                <i class="fa-solid fa-star text-amber-500"></i> Pembelajaran PKN Kelas 6 Semester 1
+            </div>
+
+            <h2 class="heading-font text-3xl md:text-5xl font-extrabold text-amber-900 mb-3 leading-tight">
+                Petualangan Nilai Pancasila <br><span class="text-indigo-600">Kelas 6C</span>
+            </h2>
+            <p class="text-slate-600 max-w-2xl mx-auto mb-8 text-sm md:text-base">
+                Mari belajar makna, hubungan antar-sila, serta penerapannya di lingkungan sekolah SDN 1 Tanjung Senang dan kehidupan bermasyarakat!
+            </p>
+
+            <!-- Student Form -->
+            <div class="max-w-md mx-auto bg-white/90 p-6 rounded-2xl shadow-inner border border-amber-100 text-left mb-6">
+                <div class="mb-4">
+                    <label class="block text-slate-700 text-sm font-bold mb-1" for="input-nama">
+                        <i class="fa-solid fa-user text-amber-500 mr-1"></i> Nama Lengkap Siswa:
+                    </label>
+                    <input type="text" id="input-nama" placeholder="Contoh: Ahmad Rizky" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold text-slate-800">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-1" for="input-absen">
+                            <i class="fa-solid fa-list-ol text-amber-500 mr-1"></i> No. Absen:
+                        </label>
+                        <input type="number" id="input-absen" min="1" max="40" placeholder="1 - 40" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-1">
+                            <i class="fa-solid fa-school text-amber-500 mr-1"></i> Kelas:
+                        </label>
+                        <input type="text" value="6C SDN 1 Tanjung Senang" disabled class="w-full px-3 py-3 rounded-xl bg-slate-100 border border-slate-300 text-xs font-bold text-slate-600">
+                    </div>
+                </div>
+
+                <!-- Avatar Selection -->
+                <div>
+                    <label class="block text-slate-700 text-sm font-bold mb-2">
+                        <i class="fa-solid fa-face-smile text-amber-500 mr-1"></i> Pilih Karakter Kamu:
+                    </label>
+                    <div class="grid grid-cols-4 gap-2" id="avatar-container">
+                        <button type="button" onclick="selectAvatar(0)" class="avatar-btn border-2 border-amber-500 bg-amber-50 p-2 rounded-xl text-center bounce-hover">
+                            <span class="text-3xl">👦🏻</span>
+                            <p class="text-[10px] font-bold text-slate-600 mt-1">Edo</p>
+                        </button>
+                        <button type="button" onclick="selectAvatar(1)" class="avatar-btn border-2 border-transparent bg-slate-100 p-2 rounded-xl text-center bounce-hover">
+                            <span class="text-3xl">👧🏽</span>
+                            <p class="text-[10px] font-bold text-slate-600 mt-1">Siti</p>
+                        </button>
+                        <button type="button" onclick="selectAvatar(2)" class="avatar-btn border-2 border-transparent bg-slate-100 p-2 rounded-xl text-center bounce-hover">
+                            <span class="text-3xl">👦🏽</span>
+                            <p class="text-[10px] font-bold text-slate-600 mt-1">Beni</p>
+                        </button>
+                        <button type="button" onclick="selectAvatar(3)" class="avatar-btn border-2 border-transparent bg-slate-100 p-2 rounded-xl text-center bounce-hover">
+                            <span class="text-3xl">👧🏻</span>
+                            <p class="text-[10px] font-bold text-slate-600 mt-1">Dayu</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="w-full max-w-md bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold py-4 px-8 rounded-2xl shadow-lg text-lg heading-font tracking-wide bounce-hover transition flex items-center justify-center gap-3 mx-auto">
+                <span>Mulai Petualangan!</span>
+                <i class="fa-solid fa-circle-play text-xl"></i>
+            </button>
+        </section>
+
+
+        <!-- SCREEN 2: GAMEPLAY -->
+        <section id="screen-game" class="hidden flex-col gap-6">
+            <!-- Game Top Status Bar -->
+            <div class="glass-card rounded-2xl p-4 shadow-md flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="player-avatar-display" class="text-3xl bg-amber-100 p-2 rounded-xl border border-amber-300">👦🏻</span>
+                    <div>
+                        <h3 id="player-name-display" class="font-bold text-slate-800 text-base leading-tight">Nama Siswa</h3>
+                        <p class="text-xs text-amber-700 font-semibold">Absen <span id="player-absen-display">0</span> • Kelas 6C Tanjung Senang</p>
+                    </div>
+                </div>
+
+                <!-- Progress & Score -->
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <p class="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Modul Level</p>
+                        <p id="level-indicator" class="heading-font font-bold text-indigo-600 text-lg">1 / 4</p>
+                    </div>
+                    <div class="text-center bg-amber-100 px-4 py-1.5 rounded-xl border border-amber-300">
+                        <p class="text-[11px] font-extrabold uppercase text-amber-800 tracking-wider">Total Skor</p>
+                        <p id="total-score-display" class="heading-font font-black text-amber-600 text-xl">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Selector Bar -->
+            <div class="grid grid-cols-4 gap-2 text-center text-xs font-bold">
+                <div id="tab-modul-1" class="py-2 px-1 rounded-xl bg-indigo-600 text-white shadow-sm transition">1. Makna & Hubungan</div>
+                <div id="tab-modul-2" class="py-2 px-1 rounded-xl bg-white/70 text-slate-500 transition">2. Sekolah (6C)</div>
+                <div id="tab-modul-3" class="py-2 px-1 rounded-xl bg-white/70 text-slate-500 transition">3. Masyarakat</div>
+                <div id="tab-modul-4" class="py-2 px-1 rounded-xl bg-white/70 text-slate-500 transition">4. Studi Kasus</div>
+            </div>
+
+            <!-- Active Question Card Container -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-white relative">
+                
+                <!-- Category Badge -->
+                <div class="flex justify-between items-center mb-4">
+                    <span id="question-category" class="px-3.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-300">
+                        <i class="fa-solid fa-bookmark mr-1"></i> Modul 1: Makna & Hubungan Sila
+                    </span>
+                    <span id="question-number" class="text-xs font-bold text-slate-500">Pertanyaan 1/3</span>
+                </div>
+
+                <!-- Question Text -->
+                <h3 id="question-text" class="heading-font text-lg md:text-2xl font-bold text-slate-800 mb-6 leading-snug">
+                    Teks Pertanyaan akan muncul di sini...
+                </h3>
+
+                <!-- Context Image/Graphic Box (Optional scenario visualization) -->
+                <div id="scenario-box" class="hidden mb-6 p-4 bg-amber-50/80 rounded-2xl border border-amber-200 text-sm text-slate-700">
+                    <i class="fa-solid fa-location-dot text-red-500 mr-2"></i>
+                    <span id="scenario-text" class="font-semibold italic">Lokasi: Lapangan SDN 1 Tanjung Senang</span>
+                </div>
+
+                <!-- Answer Options Grid -->
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6">
+                    <!-- Dynamic Buttons generated via JS -->
+                </div>
+
+                <!-- Explanation / Feedback Box -->
+                <div id="feedback-box" class="hidden p-4 rounded-2xl mb-4 text-sm font-semibold border">
+                    <div class="flex items-start gap-3">
+                        <i id="feedback-icon" class="fa-solid text-xl mt-0.5"></i>
+                        <div>
+                            <p id="feedback-title" class="font-bold text-base mb-0.5"></p>
+                            <p id="feedback-desc" class="text-xs md:text-sm"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="flex justify-end">
+                    <button id="btn-next-question" onclick="nextQuestion()" disabled class="px-6 py-3 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition flex items-center gap-2 cursor-not-allowed">
+                        <span>Lanjut</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SCREEN 3: RESULT & SCORECARD -->
+        <section id="screen-result" class="hidden glass-card rounded-3xl p-6 md:p-10 shadow-2xl border-4 border-amber-300 text-center my-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold mb-3 border border-emerald-300">
+                <i class="fa-solid fa-circle-check text-emerald-500"></i> Petualangan Selesai!
+            </div>
+
+            <h2 class="heading-font text-3xl md:text-4xl font-extrabold text-amber-900 mb-2">
+                Kartu Hasil Nilai Pancasila
+            </h2>
+            <p class="text-slate-600 text-sm mb-6">SDN 1 Tanjung Senang - Kelas 6C</p>
+
+            <!-- Score Summary Card -->
+            <div class="max-w-xl mx-auto bg-white/90 p-6 rounded-3xl shadow-inner border border-amber-200 mb-6">
+                
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-3 text-left">
+                        <span id="final-avatar" class="text-4xl bg-amber-100 p-2 rounded-2xl">👦🏻</span>
+                        <div>
+                            <h4 id="final-student-name" class="font-extrabold text-slate-800 text-lg">Ahmad Rizky</h4>
+                            <p class="text-xs text-slate-500">No. Absen: <span id="final-student-absen">1</span> | Kelas 6C</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span id="final-badge" class="px-3 py-1 bg-amber-500 text-white font-extrabold text-xs rounded-full shadow">
+                            Bintang Pancasila
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Big Final Score -->
+                <div class="mb-6">
+                    <p class="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-1">Nilai Akhir Pembelajaran</p>
+                    <div class="heading-font text-5xl md:text-6xl font-black text-amber-600" id="final-score">
+                        100
+                    </div>
+                    <p id="score-predicate" class="text-sm font-bold text-emerald-600 mt-1">Sangat Baik (Sempurna! Sifat Pancasila Tertanam Terpuji)</p>
+                </div>
+
+                <!-- Score Details per Module -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-left">
+                    <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                        <p class="text-[10px] text-amber-800 font-bold">1. Makna & Hubungan</p>
+                        <p id="score-m1" class="font-black text-amber-700 text-base">25/25</p>
+                    </div>
+                    <div class="bg-indigo-50 p-2.5 rounded-xl border border-indigo-200">
+                        <p class="text-[10px] text-indigo-800 font-bold">2. Sekolah (6C)</p>
+                        <p id="score-m2" class="font-black text-indigo-700 text-base">25/25</p>
+                    </div>
+                    <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                        <p class="text-[10px] text-emerald-800 font-bold">3. Masyarakat</p>
+                        <p id="score-m3" class="font-black text-emerald-700 text-base">25/25</p>
+                    </div>
+                    <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200">
+                        <p class="text-[10px] text-purple-800 font-bold">4. Studi Kasus</p>
+                        <p id="score-m4" class="font-black text-purple-700 text-base">25/25</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Save Alert -->
+            <div id="save-status-msg" class="max-w-xl mx-auto mb-6 p-3 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold border border-emerald-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i>
+                <span>Nilai kamu telah tersimpan otomatis ke Rekap Guru Kelas 6C!</span>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 max-w-xl mx-auto">
+                <button onclick="restartGame()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-2xl shadow transition bounce-hover flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Coba Lagi</span>
+                </button>
+                <button onclick="openTeacherModal()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl shadow transition bounce-hover flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <span>Lihat Rekap Nilai Guru</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TEACHER DASHBOARD MODAL -->
+    <div id="modal-teacher" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border-2 border-indigo-200 overflow-hidden">
+            
+            <!-- Modal Header -->
+            <div class="bg-indigo-700 text-white p-5 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="heading-font font-bold text-lg md:text-xl leading-tight">Rekap Nilai Guru - Kelas 6C</h3>
+                        <p class="text-xs text-indigo-200">SDN 1 Tanjung Senang • Mata Pelajaran PKN</p>
+                    </div>
+                </div>
+                <button onclick="closeTeacherModal()" class="w-9 h-9 bg-indigo-800 hover:bg-indigo-900 rounded-xl flex items-center justify-center text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- PIN Auth Section (Protected view if not unlocked) -->
+            <div id="teacher-auth-box" class="p-8 text-center my-auto">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-amber-300">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="heading-font text-2xl font-bold text-slate-800 mb-2">Akses Khusus Guru</h4>
+                <p class="text-slate-500 text-sm max-w-xs mx-auto mb-4">Masukkan kata sandi guru untuk membuka rekapitulasi nilai siswa kelas 6C.</p>
+                
+                <div class="max-w-xs mx-auto flex gap-2 mb-2">
+                    <input type="password" id="input-teacher-pin" placeholder="PIN Guru (Default: 6C)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center font-bold">
+                    <button onclick="verifyTeacherPin()" class="px-5 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 shadow">
+                        Buka
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-400">Petunjuk: Gunakan PIN <span class="font-bold text-indigo-600">6C</span> atau <span class="font-bold text-indigo-600">1234</span></p>
+            </div>
+
+            <!-- Teacher Data View (Unlocked) -->
+            <div id="teacher-view-content" class="hidden flex-col flex-grow p-4 md:p-6 overflow-hidden">
+                
+                <!-- Action Controls -->
+                <div class="flex flex-wrap justify-between items-center gap-3 mb-4 pb-4 border-b border-slate-200">
+                    <div class="flex items-center gap-2 w-full md:w-auto">
+                        <div class="relative flex-grow md:flex-grow-0">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="search-student" onkeyup="renderTeacherTable()" placeholder="Cari nama siswa..." class="pl-9 pr-4 py-2 text-xs border rounded-xl w-full md:w-60 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <select id="filter-score" onchange="renderTeacherTable()" class="px-3 py-2 text-xs border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 font-semibold bg-white">
+                            <option value="all">Semua Nilai</option>
+                            <option value="high">Sangat Baik (≥80)</option>
+                            <option value="mid">Cukup (60-79)</option>
+                            <option value="low">Perlu Bimbingan (&lt;60)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Unduh Excel/CSV</span>
+                        </button>
+                        <button onclick="clearStudentRecords()" class="px-3.5 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <span>Hapus Rekap</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                    <div class="bg-indigo-50 p-3 rounded-2xl border border-indigo-100">
+                        <p class="text-[10px] font-extrabold uppercase text-indigo-500">Siswa Mengerjakan</p>
+                        <p id="stat-total-students" class="heading-font text-2xl font-bold text-indigo-700">0</p>
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-2xl border border-amber-100">
+                        <p class="text-[10px] font-extrabold uppercase text-amber-500">Rata-Rata Kelas</p>
+                        <p id="stat-avg-score" class="heading-font text-2xl font-bold text-amber-700">0</p>
+                    </div>
+                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100">
+                        <p class="text-[10px] font-extrabold uppercase text-emerald-500">Nilai Tertinggi</p>
+                        <p id="stat-max-score" class="heading-font text-2xl font-bold text-emerald-700">0</p>
+                    </div>
+                </div>
+
+                <!-- Table View -->
+                <div class="flex-grow overflow-y-auto border border-slate-200 rounded-2xl bg-white">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-700 font-extrabold uppercase sticky top-0 border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">No. Absen</th>
+                                <th class="p-3">Nama Siswa</th>
+                                <th class="p-3 text-center">Modul 1</th>
+                                <th class="p-3 text-center">Modul 2</th>
+                                <th class="p-3 text-center">Modul 3</th>
+                                <th class="p-3 text-center">Modul 4</th>
+                                <th class="p-3 text-center">Total Nilai</th>
+                                <th class="p-3 text-center">Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-records-body" class="divide-y divide-slate-100 font-semibold text-slate-700">
+                            <!-- Dynamic Row Output -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        /* ==========================================================================
+           GAME DATASET - PKN KELAS 6 (HUBUNGAN, MAKNA, PENERAPAN SEKOLAH & MASYARAKAT)
+           ========================================================================== */
+        const gameQuestions = [
+            /* MODUL 1: MAKNA & HUBUNGAN NILAI-NILAI PANCASILA */
+            {
+                modul: 1,
+                modulTitle: "Modul 1: Makna & Hubungan Sila",
+                scenario: "Analisis Makna Lambang & Keterkaitan Sila",
+                question: "Sila pertama 'Ketuhanan Yang Maha Esa' dilambangkan Bintang Emas. Apakah hubungan utama antara Sila ke-1 dengan Sila ke-2 (Kemanusiaan yang Adil dan Beradab)?",
+                options: [
+                    "Sikap taat kepada Tuhan menjadi dasar untuk menyayangi dan memperlakukan sesama manusia dengan adil",
+                    "Sila pertama hanya berlaku untuk ibadah pribadi di tempat ibadah saja",
+                    "Sila kedua membebaskan seseorang untuk tidak mengikuti nilai keagamaan",
+                    "Tidak ada hubungan sama sekali antara keyakinan agama dengan kemanusiaan"
+                ],
+                correct: 0,
+                explanation: "Sila ke-1 menjadi landasan moral utama: kasih sayang kepada sesama manusia (Sila ke-2) merupakan wujud nyata keimanan kita kepada Tuhan Yang Maha Esa."
+            },
+            {
+                modul: 1,
+                modulTitle: "Modul 1: Makna & Hubungan Sila",
+                scenario: "Simbol Pohon Beringin & Kepala Banteng",
+                question: "Pohon Beringin (Sila 3) melambangkan tempat berteduh dan persatuan. Mengapa persatuan Indonesia sangat diperlukan sebelum kita melaksanakan Musyawarah (Sila 4)?",
+                options: [
+                    "Agar musyawarah dilakukan tanpa membedakan suku, agama, serta menjaga keutuhan bangsa",
+                    "Agar keputusan musyawarah hanya menguntungkan satu kelompok saja",
+                    "Agar warga Tanjung Senang tidak perlu berdiskusi lagi",
+                    "Musyawarah tidak memerlukan rasa persatuan antarwarga"
+                ],
+                correct: 0,
+                explanation: "Tanpa semangat persatuan (Sila 3), musyawarah (Sila 4) akan mudah terpecah belah oleh ego kelompok masing-masing."
+            },
+            {
+                modul: 1,
+                modulTitle: "Modul 1: Makna & Hubungan Sila",
+                scenario: "Makna Padi dan Kapas (Sila ke-5)",
+                question: "Lambang Padi dan Kapas melambangkan pangan dan sandang. Bagaimana hubungan antara Sila ke-5 (Keadilan Sosial) dengan keseluruhan Sila Pancasila?",
+                options: [
+                    "Sila ke-5 adalah tujuan akhir dari pelaksanaan Sila ke-1 sampai Sila ke-4 bagi kemakmuran bersama",
+                    "Sila ke-5 berdiri sendiri tanpa dipengaruhi oleh sila-sila sebelumnya",
+                    "Sila ke-5 hanya mengatur masalah keuangan di pasar",
+                    "Sila ke-5 bertentangan dengan musyawarah pada sila ke-4"
+                ],
+                correct: 0,
+                explanation: "Sila ke-5 adalah cita-cita dan muara akhir dari seluruh pengalaman sila Pancasila, yaitu terciptanya keadilan dan kemakmuran bagi seluruh rakyat."
+            },
+
+            /* MODUL 2: PENERAPAN NILAI PANCASILA DI SEKOLAH (SDN 1 TANJUNG SENANG KELAS 6C) */
+            {
+                modul: 2,
+                modulTitle: "Modul 2: Penerapan di Sekolah (6C)",
+                scenario: "Kehidupan Sehari-hari di Ruang Kelas 6C SDN 1 Tanjung Senang",
+                question: "Di kelas 6C SDN 1 Tanjung Senang, Dayu sedang menjalankan ibadah doa sebelum makan. Edo dan Beni yang berbeda agama sebaiknya menunjukkan sikap...",
+                options: [
+                    "Tetap tenang, tidak gaduh, serta menghormati Dayu yang sedang berdoa (Sila 1)",
+                    "Ajak Dayu berbicara dengan keras agar cepat selesai",
+                    "Mengejek kebiasaan berdoa yang berbeda",
+                    "Meninggalkan kelas dengan bersorak gaduh"
+                ],
+                correct: 0,
+                explanation: "Menghormati teman yang sedang beribadah sesuai agamanya merupakan wujud pengamalan Sila Pertama (Ketuhanan Yang Maha Esa) di lingkungan sekolah."
+            },
+            {
+                modul: 2,
+                modulTitle: "Modul 2: Penerapan di Sekolah (6C)",
+                scenario: "Musyawarah Pemilihan Ketua Kelas 6C",
+                question: "Saat wali kelas 6C memimpin pemilihan Ketua Kelas, Siti dan Budi mendapatkan hasil pemungutan suara. Budi terpilih menjadi ketua kelas. Sikap Siti yang mencerminkan Sila ke-4 adalah...",
+                options: [
+                    "Menerima keputusan dengan lapang dada dan mendukung Budi menjalankan tugas kelas",
+                    "Menolak hasil keputusan dan tidak mau ikut piket kelas lagi",
+                    "Marah kepada teman-teman yang memilih Budi",
+                    "Membentuk kelompok sendiri untuk menentang ketua kelas"
+                ],
+                correct: 0,
+                explanation: "Musyawarah dan mufakat pada Sila ke-4 menuntut kita bersikap lapang dada menghargai keputusan bersama demi kebaikan bersama."
+            },
+            {
+                modul: 2,
+                modulTitle: "Modul 2: Penerapan di Sekolah (6C)",
+                scenario: "Jadwal Piket Kebersihan SDN 1 Tanjung Senang",
+                question: "Kelompok piket hari Senin kelas 6C membagi tugas: ada yang menyapu, membersihkan papan tulis, dan membuang sampah. Semua mendapat porsi kerja yang seimbang. Ini wujud pengamalan...",
+                options: [
+                    "Sila ke-5: Keadilan Sosial (Menjalankan kewajiban dan membagi tugas secara adil)",
+                    "Sila ke-1: Ketuhanan Yang Maha Esa",
+                    "Tidak berhubungan dengan nilai Pancasila",
+                    "Hanya pemborosan waktu belajar"
+                ],
+                correct: 0,
+                explanation: "Membagi tugas kebersihan secara adil serta tidak pilih kasih merupakan wujud nyata pengamalan Sila ke-5 di sekolah."
+            },
+
+            /* MODUL 3: PENERAPAN NILAI PANCASILA DI MASYARAKAT (TANJUNG SENANG) */
+            {
+                modul: 3,
+                modulTitle: "Modul 3: Penerapan di Masyarakat",
+                scenario: "Lingkungan RT/RW di Kelurahan Tanjung Senang",
+                question: "Warga Tanjung Senang mengadakan Kerja Bakti membersihkan selokan untuk mencegah banjir saat musim hujan. Sikap yang harus ditunjukkan oleh siswa kelas 6C adalah...",
+                options: [
+                    "Ikut berpartisipasi membantu tugas ringan seperti mengumpulkan sampah plastik (Sila 3 & 5)",
+                    "Bermain game di dalam rumah dan acuh tak acuh",
+                    "Mengotori selokan yang baru saja dibersihkan warga",
+                    "Pindah ke kelurahan lain karena malas ikut"
+                ],
+                correct: 0,
+                explanation: "Gotong royong membersihkan lingkungan warga merupakan bentuk pengamalan Sila ke-3 (Persatuan) dan Sila ke-5 (Keadilan sosial/kepentingan umum)."
+            },
+            {
+                modul: 3,
+                modulTitle: "Modul 3: Penerapan di Masyarakat",
+                scenario: "Musibah Bencana Alam Tetangga",
+                question: "Salah satu tetangga di Tanjung Senang mengalami musibah rumah bocor parah akibat angin kencang. Penggalangan bantuan donasi oleh warga sekitar merupakan wujud pengamalan Sila...",
+                options: [
+                    "Sila ke-2: Kemanusiaan yang Adil dan Beradab (Saling menolong sesama yang tertimpa musibah)",
+                    "Sila ke-1 saja tanpa perlu bantuan tindakan nyata",
+                    "Tidak perlu ditolong karena bukan saudara kandung",
+                    "Melarang orang lain memberikan bantuan"
+                ],
+                correct: 0,
+                explanation: "Menolong sesama manusia yang sedang kesulitan adalah wujud tenggang rasa dan kasih sayang sesuai nilai Sila ke-2."
+            },
+
+            /* MODUL 4: TANTANGAN EVALUASI STUDI KASUS (ANALISIS KELAS 6) */
+            {
+                modul: 4,
+                modulTitle: "Modul 4: Studi Kasus Interaktif",
+                scenario: "Studi Kasus: Pelanggaran Kebersihan & Kedisiplinan",
+                question: "Apabila seorang siswa kelas 6C sengaja merusak fasilitas meja sekolah dan merundung (bullying) teman kelasnya, sila manakah yang telah ia langgar sekaligus?",
+                options: [
+                    "Sila ke-2 (Kemanusiaan/menyakiti sesama) dan Sila ke-5 (Merasah/merusak hak keadilan fasilitas umum)",
+                    "Hanya melanggar aturan tata tertib tanpa kaitan Pancasila",
+                    "Hanya melanggar Sila ke-1 saja",
+                    "Siswa tersebut tidak bersalah"
+                ],
+                correct: 0,
+                explanation: "Menyakiti teman melanggar Sila 2, dan merusak fasilitas bersama melanggar Sila 5 karena merugikan hak bersama warga sekolah."
+            },
+            {
+                modul: 4,
+                modulTitle: "Modul 4: Studi Kasus Interaktif",
+                scenario: "Studi Kasus: Keputusan Rapat Kelompok",
+                question: "Dalam diskusi kelompok PKN kelas 6C, pendapatmu tidak dipilih oleh mayoritas teman. Langkah terbaik yang paling bijaksana sesuai jiwa Pancasila adalah...",
+                options: [
+                    "Hargai keputusan mayoritas, serta ikut menjalankan hasil diskusi dengan penuh tanggung jawab",
+                    "Mogok kerja kelompok dan melaporkan teman ke kepala sekolah",
+                    "Memaksa teman-teman memakai ide pribadi",
+                    "Keluar dari ruang kelas 6C"
+                ],
+                correct: 0,
+                explanation: "Menghargai hasil musyawarah mufakat demi kepentingan kelompok merupakan perwujudan utama Sila ke-4 Pancasila."
+            }
+        ];
+
+        /* ==========================================================================
+           GAME STATE VARIABLES
+           ========================================================================== */
+        let gameState = {
+            studentName: "",
+            studentAbsen: 0,
+            avatarIndex: 0,
+            currentQuestionIdx: 0,
+            score: 0,
+            moduleScores: { 1: 0, 2: 0, 3: 0, 4: 0 },
+            answered: false,
+            soundEnabled: true,
+            teacherUnlocked: false
+        };
+
+        const avatars = ['👦🏻', '👧🏽', '👦🏽', '👧🏻'];
+        let studentRecords = JSON.parse(localStorage.getItem('pancasila_6c_records') || '[]');
+
+        /* ==========================================================================
+           AUDIO SYNTHESIZER (WEB AUDIO API)
+           ========================================================================== */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.2); // A5
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now); // A3
+                    osc.frequency.exponentialRampToValueAtTime(130.81, now + 0.25); // C3
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'win') {
+                    // Victory Chime
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.frequency.setValueAtTime(freq, now + idx * 0.1);
+                        g.gain.setValueAtTime(0.2, now + idx * 0.1);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.1 + 0.3);
+                        o.start(now + idx * 0.1);
+                        o.stop(now + idx * 0.1 + 0.3);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        function toggleSound() {
+            gameState.soundEnabled = !gameState.soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (gameState.soundEnabled) {
+                icon.className = "fa-solid fa-volume-high text-amber-600";
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-slate-400";
+            }
+        }
+
+        /* ==========================================================================
+           UI FUNCTIONS & SCREEN NAVIGATION
+           ========================================================================== */
+        function selectAvatar(index) {
+            playSound('click');
+            gameState.avatarIndex = index;
+            const btns = document.querySelectorAll('.avatar-btn');
+            btns.forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('border-amber-500', 'bg-amber-50');
+                    btn.classList.remove('border-transparent', 'bg-slate-100');
+                } else {
+                    btn.classList.remove('border-amber-500', 'bg-amber-50');
+                    btn.classList.add('border-transparent', 'bg-slate-100');
+                }
+            });
+        }
+
+        function startGame() {
+            const nameInput = document.getElementById('input-nama').value.trim();
+            const absenInput = document.getElementById('input-absen').value.trim();
+
+            if (!nameInput) {
+                alert("Harap masukkan nama lengkap kamu terlebih dahulu!");
+                return;
+            }
+            if (!absenInput || parseInt(absenInput) < 1) {
+                alert("Harap masukkan nomor absen yang valid!");
+                return;
+            }
+
+            playSound('click');
+            gameState.studentName = nameInput;
+            gameState.studentAbsen = parseInt(absenInput);
+            gameState.currentQuestionIdx = 0;
+            gameState.score = 0;
+            gameState.moduleScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+            // Update Status UI Bar
+            document.getElementById('player-name-display').innerText = gameState.studentName;
+            document.getElementById('player-absen-display').innerText = gameState.studentAbsen;
+            document.getElementById('player-avatar-display').innerText = avatars[gameState.avatarIndex];
+
+            // Switch Screen
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            document.getElementById('screen-game').classList.add('flex');
+
+            renderQuestion();
+        }
+
+        function updateModuleTabs(currentModul) {
+            for (let i = 1; i <= 4; i++) {
+                const tab = document.getElementById(`tab-modul-${i}`);
+                if (i === currentModul) {
+                    tab.className = "py-2 px-1 rounded-xl bg-indigo-600 text-white font-bold shadow-md transition";
+                } else if (i < currentModul) {
+                    tab.className = "py-2 px-1 rounded-xl bg-emerald-500 text-white font-bold shadow-sm transition";
+                } else {
+                    tab.className = "py-2 px-1 rounded-xl bg-white/70 text-slate-400 transition";
+                }
+            }
+        }
+
+        function renderQuestion() {
+            gameState.answered = false;
+            const q = gameQuestions[gameState.currentQuestionIdx];
+
+            // Update UI indicators
+            document.getElementById('level-indicator').innerText = `${q.modul} / 4`;
+            document.getElementById('total-score-display').innerText = gameState.score;
+            document.getElementById('question-category').innerHTML = `<i class="fa-solid fa-bookmark mr-1"></i> ${q.modulTitle}`;
+            document.getElementById('question-number').innerText = `Pertanyaan ${gameState.currentQuestionIdx + 1}/${gameQuestions.length}`;
+            document.getElementById('question-text').innerText = q.question;
+
+            updateModuleTabs(q.modul);
+
+            // Scenario box
+            const scenarioBox = document.getElementById('scenario-box');
+            if (q.scenario) {
+                scenarioBox.classList.remove('hidden');
+                document.getElementById('scenario-text').innerText = `Konteks: ${q.scenario}`;
+            } else {
+                scenarioBox.classList.add('hidden');
+            }
+
+            // Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn p-4 rounded-2xl bg-white hover:bg-amber-50 border-2 border-slate-200 hover:border-amber-400 text-left font-bold text-slate-700 shadow-sm transition flex items-start gap-3 bounce-hover";
+                btn.onclick = () => selectAnswer(optIdx);
+                btn.innerHTML = `
+                    <span class="w-7 h-7 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center font-black text-xs shrink-0 mt-0.5 border">
+                        ${String.fromCharCode(65 + optIdx)}
+                    </span>
+                    <span class="text-sm md:text-base leading-snug">${optText}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Reset feedback & next button
+            document.getElementById('feedback-box').classList.add('hidden');
+            const nextBtn = document.getElementById('btn-next-question');
+            nextBtn.disabled = true;
+            nextBtn.className = "px-6 py-3 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition flex items-center gap-2 cursor-not-allowed";
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (gameState.answered) return;
+            gameState.answered = true;
+
+            const q = gameQuestions[gameState.currentQuestionIdx];
+            const isCorrect = (selectedIndex === q.correct);
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('bounce-hover');
+
+                if (idx === q.correct) {
+                    btn.className = "option-btn p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-500 text-emerald-900 font-bold text-left shadow-sm flex items-start gap-3";
+                } else if (idx === selectedIndex && !isCorrect) {
+                    btn.className = "option-btn p-4 rounded-2xl bg-rose-50 border-2 border-rose-400 text-rose-900 font-bold text-left shadow-sm flex items-start gap-3";
+                } else {
+                    btn.className = "option-btn p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-400 text-left flex items-start gap-3 opacity-60";
+                }
+            });
+
+            // Calculate points (10 points per correct question)
+            const pts = isCorrect ? 10 : 0;
+            if (isCorrect) {
+                gameState.score += pts;
+                gameState.moduleScores[q.modul] += pts;
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+
+            document.getElementById('total-score-display').innerText = gameState.score;
+
+            // Render feedback
+            const fbBox = document.getElementById('feedback-box');
+            fbBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                fbBox.className = "p-4 rounded-2xl mb-4 text-sm font-semibold border bg-emerald-50 border-emerald-300 text-emerald-900";
+                document.getElementById('feedback-icon').className = "fa-solid fa-circle-check text-emerald-600 text-2xl";
+                document.getElementById('feedback-title').innerText = "Hebat! Jawabanmu Tepat 🎉";
+            } else {
+                fbBox.className = "p-4 rounded-2xl mb-4 text-sm font-semibold border bg-rose-50 border-rose-300 text-rose-900";
+                document.getElementById('feedback-icon').className = "fa-solid fa-circle-xmark text-rose-600 text-2xl";
+                document.getElementById('feedback-title').innerText = "Hampir Benar, Pelajari Penjelasannya:";
+            }
+            document.getElementById('feedback-desc').innerText = q.explanation;
+
+            // Enable next button
+            const nextBtn = document.getElementById('btn-next-question');
+            nextBtn.disabled = false;
+            nextBtn.className = "px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-extrabold rounded-xl shadow-lg transition flex items-center gap-2 bounce-hover cursor-pointer";
+        }
+
+        function nextQuestion() {
+            playSound('click');
+            gameState.currentQuestionIdx++;
+
+            if (gameState.currentQuestionIdx < gameQuestions.length) {
+                renderQuestion();
+            } else {
+                finishGame();
+            }
+        }
+
+        function finishGame() {
+            playSound('win');
+            
+            // Calculate final percentage score (Max possible = 100)
+            const totalQuestions = gameQuestions.length;
+            const maxScorePossible = totalQuestions * 10;
+            const finalScaledScore = Math.round((gameState.score / maxScorePossible) * 100);
+
+            // Determine predicate & badge
+            let badgeTitle = "Bintang Pancasila 6C";
+            let predicateText = "Sangat Baik (Sempurna! Nilai-nilai Pancasila Tertanam Terpuji)";
+            
+            if (finalScaledScore >= 90) {
+                badgeTitle = "Pelopor Pancasila 6C";
+                predicateText = "Sangat Baik! Memahami dan Menerapkan Pancasila Sempurna.";
+            } else if (finalScaledScore >= 75) {
+                badgeTitle = "Duta Karakter Pancasila";
+                predicateText = "Baik! Sudah Memahami Makna Sila dengan Cukup Baik.";
+            } else if (finalScaledScore >= 60) {
+                badgeTitle = "Sahabat Pancasila";
+                predicateText = "Cukup. Perlu Membaca Kembali Materi Nilai Pancasila.";
+            } else {
+                badgeTitle = "Tunas Pancasila";
+                predicateText = "Perlu Bimbingan Guru dan Orang Tua.";
+            }
+
+            // Populate Final Result Screen
+            document.getElementById('final-student-name').innerText = gameState.studentName;
+            document.getElementById('final-student-absen').innerText = gameState.studentAbsen;
+            document.getElementById('final-avatar').innerText = avatars[gameState.avatarIndex];
+            document.getElementById('final-score').innerText = finalScaledScore;
+            document.getElementById('final-badge').innerText = badgeTitle;
+            document.getElementById('score-predicate').innerText = predicateText;
+
+            // Module breakdown
+            document.getElementById('score-m1').innerText = `${gameState.moduleScores[1]} Poin`;
+            document.getElementById('score-m2').innerText = `${gameState.moduleScores[2]} Poin`;
+            document.getElementById('score-m3').innerText = `${gameState.moduleScores[3]} Poin`;
+            document.getElementById('score-m4').innerText = `${gameState.moduleScores[4]} Poin`;
+
+            // Save record
+            saveStudentRecord(finalScaledScore, badgeTitle);
+
+            // Confetti
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            // Switch Screen
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('flex');
+            document.getElementById('screen-result').classList.remove('hidden');
+        }
+
+        function saveStudentRecord(finalScore, badge) {
+            const now = new Date();
+            const timeFormatted = now.toLocaleDateString('id-ID', {
+                day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+            });
+
+            const newRecord = {
+                id: Date.now(),
+                nama: gameState.studentName,
+                absen: gameState.studentAbsen,
+                kelas: "6C",
+                modul1: gameState.moduleScores[1],
+                modul2: gameState.moduleScores[2],
+                modul3: gameState.moduleScores[3],
+                modul4: gameState.moduleScores[4],
+                scoreTotal: finalScore,
+                badge: badge,
+                waktu: timeFormatted
+            };
+
+            // Save locally
+            studentRecords.unshift(newRecord);
+            localStorage.setItem('pancasila_6c_records', JSON.stringify(studentRecords));
+        }
+
+        function restartGame() {
+            playSound('click');
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-welcome').classList.remove('hidden');
+        }
+
+        /* ==========================================================================
+           TEACHER DASHBOARD LOGIC (REKAP NILAI GURU)
+           ========================================================================== */
+        function openTeacherModal() {
+            playSound('click');
+            document.getElementById('modal-teacher').classList.remove('hidden');
+            
+            if (gameState.teacherUnlocked) {
+                document.getElementById('teacher-auth-box').classList.add('hidden');
+                document.getElementById('teacher-view-content').classList.remove('hidden');
+                document.getElementById('teacher-view-content').classList.add('flex');
+                renderTeacherTable();
+            } else {
+                document.getElementById('teacher-auth-box').classList.remove('hidden');
+                document.getElementById('teacher-view-content').classList.add('hidden');
+                document.getElementById('teacher-view-content').classList.remove('flex');
+            }
+        }
+
+        function closeTeacherModal() {
+            playSound('click');
+            document.getElementById('modal-teacher').classList.add('hidden');
+        }
+
+        function verifyTeacherPin() {
+            const pin = document.getElementById('input-teacher-pin').value.trim();
+            if (pin === "6C" || pin === "1234" || pin.toLowerCase() === "guru") {
+                playSound('correct');
+                gameState.teacherUnlocked = true;
+                document.getElementById('teacher-auth-box').classList.add('hidden');
+                document.getElementById('teacher-view-content').classList.remove('hidden');
+                document.getElementById('teacher-view-content').classList.add('flex');
+                renderTeacherTable();
+            } else {
+                playSound('wrong');
+                alert("PIN Salah! Masukkan PIN '6C' atau '1234'.");
+            }
+        }
+
+        function renderTeacherTable() {
+            const tbody = document.getElementById('teacher-records-body');
+            tbody.innerHTML = '';
+
+            const searchQuery = document.getElementById('search-student').value.toLowerCase();
+            const filterScore = document.getElementById('filter-score').value;
+
+            let filtered = studentRecords.filter(r => {
+                const matchName = r.nama.toLowerCase().includes(searchQuery);
+                let matchScore = true;
+                if (filterScore === 'high') matchScore = r.scoreTotal >= 80;
+                else if (filterScore === 'mid') matchScore = r.scoreTotal >= 60 && r.scoreTotal < 80;
+                else if (filterScore === 'low') matchScore = r.scoreTotal < 60;
+
+                return matchName && matchScore;
+            });
+
+            // Update stats
+            document.getElementById('stat-total-students').innerText = studentRecords.length;
+            
+            if (studentRecords.length > 0) {
+                const sum = studentRecords.reduce((acc, curr) => acc + curr.scoreTotal, 0);
+                const avg = Math.round(sum / studentRecords.length);
+                const max = Math.max(...studentRecords.map(r => r.scoreTotal));
+                document.getElementById('stat-avg-score').innerText = avg;
+                document.getElementById('stat-max-score').innerText = max;
+            } else {
+                document.getElementById('stat-avg-score').innerText = '0';
+                document.getElementById('stat-max-score').innerText = '0';
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="p-6 text-center text-slate-400 font-semibold italic">
+                            Belum ada rekap data nilai siswa yang dicatat.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filtered.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+                
+                let scoreBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if (r.scoreTotal < 60) scoreBadgeClass = "bg-rose-100 text-rose-800 border-rose-300";
+                else if (r.scoreTotal < 80) scoreBadgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-600 text-center">${r.absen}</td>
+                    <td class="p-3 font-extrabold text-slate-800">${r.nama}</td>
+                    <td class="p-3 text-center text-slate-600">${r.modul1}</td>
+                    <td class="p-3 text-center text-slate-600">${r.modul2}</td>
+                    <td class="p-3 text-center text-slate-600">${r.modul3}</td>
+                    <td class="p-3 text-center text-slate-600">${r.modul4}</td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-1 rounded-full border text-xs font-black ${scoreBadgeClass}">
+                            ${r.scoreTotal}
+                        </span>
+                    </td>
+                    <td class="p-3 text-center text-slate-400 text-[11px]">${r.waktu}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportToCSV() {
+            if (studentRecords.length === 0) {
+                alert("Belum ada data nilai untuk diunduh!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "No Absen,Nama Siswa,Kelas,Modul 1 (Makna),Modul 2 (Sekolah),Modul 3 (Masyarakat),Modul 4 (Studi Kasus),Total Nilai,Predikat,Waktu Pengerjaan\n";
+
+            studentRecords.forEach(r => {
+                csvContent += `"${r.absen}","${r.nama}","${r.kelas}","${r.modul1}","${r.modul2}","${r.modul3}","${r.modul4}","${r.scoreTotal}","${r.badge}","${r.waktu}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Rekap_Nilai_PKN_Kelas_6C_SDN1_Tanjung_Senang.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearStudentRecords() {
+            if (confirm("Apakah Bu/Pak Guru yakin ingin menghapus seluruh data rekap nilai siswa kelas 6C?")) {
+                studentRecords = [];
+                localStorage.removeItem('pancasila_6c_records');
+                renderTeacherTable();
+            }
+        }
+    </script>
+</body>
+</html>
+
